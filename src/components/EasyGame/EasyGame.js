@@ -1,8 +1,12 @@
-import React from 'react';
+import React ,{ useState } from 'react';
 
 
-const EasyGame =()=>(
+const EasyGame =({ easyQ })=>{
+    let [index, setIndex] = useState(0);
+    // console.log(props.easyQ)
+    return(
+    <p>{easyQ[0].question}</p>
+    
+    )}
 
-    <p>Easy</p>
-)
-export default EasyGame
+export default EasyGame 

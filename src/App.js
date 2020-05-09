@@ -46,6 +46,9 @@ class App extends Component {
             arrMediumQuestions:arrMediumQuestions,
             arrHardQuestions:arrHardQuestions
            })
+      
+           
+           
 //          console.log(arrEasyQuestions)
 //          console.log(arrMediumQuestions) 
 //          console.log(arrHardQuestions) 
