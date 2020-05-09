@@ -1,0 +1,51 @@
+.game-title{
+    color:#862a5c;
+    font-family: 'Acme', sans-serif;
+    font-style:normal;
+    font-size: 5em;
+    font-weight: 700;
+    /* src: local('Acme'), local('Acme-Regular'),
+     url('https://fonts.googleapis.com/css2?family=Acme&display=swap') format('woff2'); */}
+
+.game-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height:60vh;  
+    }
+.instruct {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#f4a548
+}    
+.start-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+@media only screen and (max-width: 750px) {
+    .start-btn {
+      font-size: .8rem;
+      /* box-shadow: inset 0px 0px 5px 3px #9fb4f2; */
+      border-radius: 25px;
+      padding: 5px 9px;
+      margin: 8px 0 8px 0;
+      height: 50px;
+      justify-content: center;
+    }
+    .game-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height:30vh;  
+    }
+    /* .game-title {
+      font-size: 13vw;
+    } */
+  
+    /* .game-title{
+      height: 150px;
+    } */
+}

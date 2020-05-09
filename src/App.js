@@ -28,7 +28,7 @@ class App extends Component {
          const arrMediumQuestions=[];
          const arrHardQuestions=[]
          data.results.map((item)=>{
-           //if statements, devide the data by diffilculty and store it in different arrays
+//if statements, devide the data by diffilculty and store it in different arrays
               if(item.difficulty === 'easy'){
                   arrEasyQuestions.push(item)
                      return arrEasyQuestions
@@ -55,12 +55,6 @@ class App extends Component {
 render (){
   return (
     <div className="App">
-{/* //     <div className='home'>
-//     <Link to='/easy'>Take it easy!</Link>
-//     <Link to='/medium'>Take it to medium!</Link>
-//     <Link to='/hard'>Take it hard!</Link>
-//     <Link to ='/'>Reset</Link>
-// </div> */}
     <Switch>
        <Route exact path='/' 
         component={Home}  
