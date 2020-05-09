@@ -1,11 +1,20 @@
 import React , { Component } from 'react';
 import axios from "axios"
-
+import Home from './components/Home/Home';
 import './App.css';
+import { Switch, Route, Link } from 'react-router-dom';
+import EasyGame from './components/EasyGame/EasyGame';
+import MediumGame from './components/MediumGame/MediumGame';
+import HardGame from './components/HardGame/HardGame'
+// import { MyContext } from "./context/MyProvider"
 
 class App extends Component {
+  // const { data } = React.useContext(MyContext);
   state={
     data:[],
+    arrEasyQuestions:[],
+    arrMediumQuestions:[],
+    arrHardQuestions:[]
 
   }
   // api call to get the object with the questions
@@ -31,21 +40,46 @@ class App extends Component {
                      return arrHardQuestions
               }
            })
-         console.log(arrEasyQuestions)
-         console.log(arrMediumQuestions) 
-         console.log(arrHardQuestions) 
-console.log(data)
-console.log(data.results[0].difficulty)
+          // saving to state the arrays
+           this.setState({
+            arrEasyQuestions:arrEasyQuestions,
+            arrMediumQuestions:arrMediumQuestions,
+            arrHardQuestions:arrHardQuestions
+           })
+//          console.log(arrEasyQuestions)
+//          console.log(arrMediumQuestions) 
+//          console.log(arrHardQuestions) 
+// console.log(data)
+// console.log(data.results[0].difficulty)
   }
 render (){
   return (
     <div className="App">
-     
-      
-        <p>
-         Home
-        </p>
-      
+{/* //     <div className='home'>
+//     <Link to='/easy'>Take it easy!</Link>
+//     <Link to='/medium'>Take it to medium!</Link>
+//     <Link to='/hard'>Take it hard!</Link>
+//     <Link to ='/'>Reset</Link>
+// </div> */}
+    <Switch>
+       <Route exact path='/' 
+        component={Home}  
+         />
+        <Route exact path='/easy' 
+        component={(props) => (
+       <EasyGame easyQ={this.state.arrEasyQuestions} {... props} />)} 
+       />
+       <Route exact path='/medium' 
+       component={(props) => (
+       <MediumGame mediumQ={this.state.arrMediumQuestions} {... props} />
+       )} 
+       />
+       <Route exact path='/hard' 
+       component={(props) => (
+       <HardGame hardQ={this.state.arrHardQuestions} {... props} />
+       )} 
+       />
+       </Switch>
     </div>
   );
 }
