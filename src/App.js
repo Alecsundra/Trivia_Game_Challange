@@ -2,7 +2,7 @@ import React , { Component } from 'react';
 import axios from "axios"
 import Home from './components/Home/Home';
 import './App.css';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import EasyGame from './components/EasyGame/EasyGame';
 import MediumGame from './components/MediumGame/MediumGame';
 import HardGame from './components/HardGame/HardGame'
@@ -11,17 +11,22 @@ import HardGame from './components/HardGame/HardGame'
 class App extends Component {
   // const { data } = React.useContext(MyContext);
   state={
+    score:0,
     data:[],
     arrEasyQuestions:[],
     arrMediumQuestions:[],
-    arrHardQuestions:[]
+    arrHardQuestions:[],
+    index:0,//used for identify the questions in array
+    question:''
 
   }
   // api call to get the object with the questions
   async componentDidMount(){
-    const { data }= await axios(`https://opentdb.com/api.php?amount=10&category=29&type=multiple`)
+    const { data }= await axios(`https://opentdb.com/api.php?amount=10&category=11&type=multiple`)
         this.setState({
-          data:data.results
+          data:data.results,
+           question:data.results[this.state.index].question,
+
          })
 // mapping the data and getting the questions arrays filtered per difficulty
          const arrEasyQuestions=[];
@@ -29,10 +34,10 @@ class App extends Component {
          const arrHardQuestions=[]
          data.results.map((item)=>{
 //if statements, devide the data by diffilculty and store it in different arrays
-              if(item.difficulty === 'easy'){
+              if(item.difficulty === 'easy' ){
                   arrEasyQuestions.push(item)
-                     return arrEasyQuestions
-           }else if(item.difficulty === 'medium'){
+                     return arrEasyQuestions 
+           }else if(item.difficulty === 'medium' ){
                 arrMediumQuestions.push(item)
                      return arrMediumQuestions
           }else{
@@ -44,36 +49,73 @@ class App extends Component {
            this.setState({
             arrEasyQuestions:arrEasyQuestions,
             arrMediumQuestions:arrMediumQuestions,
-            arrHardQuestions:arrHardQuestions
+            arrHardQuestions:arrHardQuestions,
            })
-      
-           
-           
-//          console.log(arrEasyQuestions)
-//          console.log(arrMediumQuestions) 
-//          console.log(arrHardQuestions) 
-// console.log(data)
-// console.log(data.results[0].difficulty)
+// console.log(this.state.data)
   }
+  //increase the index function
+checkTheAnswerM =(e)=>{
+  if (this.state.arrMediumQuestions[this.state.index].correct_answer === e.target.value){
+this.setState({
+  index:this.state.index + 1,
+  score:this.state.score+50
+})
+      }
+    }
+checkTheAnswerH =(e)=>{
+      if (this.state.arrHardQuestions[this.state.index].correct_answer === e.target.value){
+    this.setState({
+      index:this.state.index + 1,
+      score:this.state.score+100
+    })
+          }
+        }
+checkTheAnswerE =(e)=>{
+          if (this.state.arrEasyQuestions[this.state.index].correct_answer === e.target.value){
+        this.setState({
+          index:this.state.index + 1,
+          score:this.state.score+30
+        })
+              }
+            }
+// }
+// }  
+// the function that will check if the answer it's true
+
 render (){
   return (
     <div className="App">
+    <p className='instruct'>{this.state.score}</p>
     <Switch>
        <Route exact path='/' 
-        component={Home}  
+        component={(props) => (
+       <Home data={this.state.data} 
+       {... props} />)}  
          />
         <Route exact path='/easy' 
         component={(props) => (
-       <EasyGame easyQ={this.state.arrEasyQuestions} {... props} />)} 
+       <EasyGame 
+       easyQ={this.state.arrEasyQuestions} 
+       index={this.state.index}
+       checkTheAnswer={this.checkTheAnswerE}
+       {... props} />)} 
        />
        <Route exact path='/medium' 
        component={(props) => (
-       <MediumGame mediumQ={this.state.arrMediumQuestions} {... props} />
-       )} 
+       <MediumGame 
+       arrMediumQuestions={this.state.arrMediumQuestions}
+       checkTheAnswer={this.checkTheAnswerM}
+       index={this.state.index}
+        {... props}
+         />)} 
        />
        <Route exact path='/hard' 
        component={(props) => (
-       <HardGame hardQ={this.state.arrHardQuestions} {... props} />
+       <HardGame 
+       arrHardQuestions={this.state.arrHardQuestions}
+       index={this.state.index}
+       checkTheAnswer={this.checkTheAnswerH}
+        {... props} />
        )} 
        />
        </Switch>
